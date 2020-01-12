@@ -26,7 +26,7 @@ In Kubernetes, application monitoring does not depend on a single monitoring sol
 
 The resource metrics pipeline provides a limited set of metrics related to
 cluster components such as the [Horizontal Pod Autoscaler](/docs/tasks/run-application/horizontal-pod-autoscale) controller, as well as the `kubectl top` utility.
-These  metrics are collected by the lightweight, short-term, in-memory 
+These metrics are collected by the lightweight, short-term, in-memory 
 [metrics-server](https://github.com/kubernetes-incubator/metrics-server) and
  are exposed via the `metrics.k8s.io` API. 
 
