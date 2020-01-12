@@ -1,12 +1,10 @@
 ---
 title: kube-controller-manager
-notitle: true
+content_template: templates/tool-reference
+weight: 28
 ---
-## kube-controller-manager
 
-
-
-### Synopsis
+{{% capture synopsis %}}
 
 
 The Kubernetes controller manager is a daemon that embeds
@@ -22,7 +20,9 @@ controller, and serviceaccounts controller.
 kube-controller-manager [flags]
 ```
 
-### Options
+{{% /capture %}}
+
+{{% capture options %}}
 
 <table style="width: 100%; table-layout: fixed;">
   <colgroup>
@@ -30,6 +30,13 @@ kube-controller-manager [flags]
     <col span="1" />
   </colgroup>
   <tbody>
+
+    <tr>
+      <td colspan="2">--add-dir-header</td>
+    </tr>
+    <tr>
+      <td></td><td style="line-height: 130%; word-wrap: break-word;">If true, adds the file directory to the header</td>
+    </tr>
 
     <tr>
       <td colspan="2">--allocate-node-cidrs</td>
@@ -228,6 +235,13 @@ kube-controller-manager [flags]
     </tr>
 
     <tr>
+      <td colspan="2">--concurrent-service-endpoint-syncs int32&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default: 5</td>
+    </tr>
+    <tr>
+      <td></td><td style="line-height: 130%; word-wrap: break-word;">The number of service endpoint syncing operations that will be done concurrently. Larger number = faster endpoint slice updating, but more CPU (and network) load. Defaults to 5.</td>
+    </tr>
+
+    <tr>
       <td colspan="2">--concurrent-service-syncs int32&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default: 1</td>
     </tr>
     <tr>
@@ -239,6 +253,13 @@ kube-controller-manager [flags]
     </tr>
     <tr>
       <td></td><td style="line-height: 130%; word-wrap: break-word;">The number of service account token objects that are allowed to sync concurrently. Larger number = more responsive token generation, but more CPU (and network) load</td>
+    </tr>
+
+    <tr>
+      <td colspan="2">--concurrent-statefulset-syncs int32&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default: 5</td>
+    </tr>
+    <tr>
+      <td></td><td style="line-height: 130%; word-wrap: break-word;">The number of statefulset objects that are allowed to sync concurrently. Larger number = more responsive statefulsets, but more CPU (and network) load</td>
     </tr>
 
     <tr>
@@ -280,7 +301,7 @@ kube-controller-manager [flags]
       <td colspan="2">--controllers stringSlice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default: [*]</td>
     </tr>
     <tr>
-      <td></td><td style="line-height: 130%; word-wrap: break-word;">A list of controllers to enable. '*' enables all on-by-default controllers, 'foo' enables the controller named 'foo', '-foo' disables the controller named 'foo'.<br/>All controllers: attachdetach, bootstrapsigner, cloud-node-lifecycle, clusterrole-aggregation, cronjob, csrapproving, csrcleaner, csrsigning, daemonset, deployment, disruption, endpoint, garbagecollector, horizontalpodautoscaling, job, namespace, nodeipam, nodelifecycle, persistentvolume-binder, persistentvolume-expander, podgc, pv-protection, pvc-protection, replicaset, replicationcontroller, resourcequota, root-ca-cert-publisher, route, service, serviceaccount, serviceaccount-token, statefulset, tokencleaner, ttl, ttl-after-finished<br/>Disabled-by-default controllers: bootstrapsigner, tokencleaner</td>
+      <td></td><td style="line-height: 130%; word-wrap: break-word;">A list of controllers to enable. '*' enables all on-by-default controllers, 'foo' enables the controller named 'foo', '-foo' disables the controller named 'foo'.<br/>All controllers: attachdetach, bootstrapsigner, cloud-node-lifecycle, clusterrole-aggregation, cronjob, csrapproving, csrcleaner, csrsigning, daemonset, deployment, disruption, endpoint, endpointslice, garbagecollector, horizontalpodautoscaling, job, namespace, nodeipam, nodelifecycle, persistentvolume-binder, persistentvolume-expander, podgc, pv-protection, pvc-protection, replicaset, replicationcontroller, resourcequota, root-ca-cert-publisher, route, service, serviceaccount, serviceaccount-token, statefulset, tokencleaner, ttl, ttl-after-finished<br/>Disabled-by-default controllers: bootstrapsigner, tokencleaner</td>
     </tr>
 
     <tr>
@@ -326,6 +347,13 @@ kube-controller-manager [flags]
     </tr>
 
     <tr>
+      <td colspan="2">--endpoint-updates-batch-period duration</td>
+    </tr>
+    <tr>
+      <td></td><td style="line-height: 130%; word-wrap: break-word;">The length of endpoint updates batching period. Processing of pod changes will be delayed by this duration to join them with potential upcoming updates and reduce the overall number of endpoints updates. Larger number = higher endpoint programming latency, but lower number of endpoints revision generated</td>
+    </tr>
+
+    <tr>
       <td colspan="2">--experimental-cluster-signing-duration duration&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default: 8760h0m0s</td>
     </tr>
     <tr>
@@ -343,7 +371,7 @@ kube-controller-manager [flags]
       <td colspan="2">--feature-gates mapStringBool</td>
     </tr>
     <tr>
-      <td></td><td style="line-height: 130%; word-wrap: break-word;">A set of key=value pairs that describe feature gates for alpha/experimental features. Options are:<br/>APIListChunking=true|false (BETA - default=true)<br/>APIResponseCompression=true|false (ALPHA - default=false)<br/>AllAlpha=true|false (ALPHA - default=false)<br/>AppArmor=true|false (BETA - default=true)<br/>AttachVolumeLimit=true|false (BETA - default=true)<br/>BalanceAttachedNodeVolumes=true|false (ALPHA - default=false)<br/>BlockVolume=true|false (BETA - default=true)<br/>BoundServiceAccountTokenVolume=true|false (ALPHA - default=false)<br/>CPUManager=true|false (BETA - default=true)<br/>CRIContainerLogRotation=true|false (BETA - default=true)<br/>CSIBlockVolume=true|false (ALPHA - default=false)<br/>CSIDriverRegistry=true|false (ALPHA - default=false)<br/>CSINodeInfo=true|false (ALPHA - default=false)<br/>CustomCPUCFSQuotaPeriod=true|false (ALPHA - default=false)<br/>CustomPodDNS=true|false (BETA - default=true)<br/>CustomResourceSubresources=true|false (BETA - default=true)<br/>CustomResourceValidation=true|false (BETA - default=true)<br/>CustomResourceWebhookConversion=true|false (ALPHA - default=false)<br/>DebugContainers=true|false (ALPHA - default=false)<br/>DevicePlugins=true|false (BETA - default=true)<br/>DryRun=true|false (BETA - default=true)<br/>DynamicAuditing=true|false (ALPHA - default=false)<br/>DynamicKubeletConfig=true|false (BETA - default=true)<br/>EnableEquivalenceClassCache=true|false (ALPHA - default=false)<br/>ExpandInUsePersistentVolumes=true|false (ALPHA - default=false)<br/>ExpandPersistentVolumes=true|false (BETA - default=true)<br/>ExperimentalCriticalPodAnnotation=true|false (ALPHA - default=false)<br/>ExperimentalHostUserNamespaceDefaulting=true|false (BETA - default=false)<br/>HugePages=true|false (BETA - default=true)<br/>HyperVContainer=true|false (ALPHA - default=false)<br/>Initializers=true|false (ALPHA - default=false)<br/>KubeletPodResources=true|false (ALPHA - default=false)<br/>LocalStorageCapacityIsolation=true|false (BETA - default=true)<br/>LocalStorageCapacityIsolationFSQuotaMonitoring=true|false (ALPHA - default=false)<br/>MountContainers=true|false (ALPHA - default=false)<br/>NodeLease=true|false (ALPHA - default=false)<br/>PersistentLocalVolumes=true|false (BETA - default=true)<br/>PodPriority=true|false (BETA - default=true)<br/>PodReadinessGates=true|false (BETA - default=true)<br/>PodShareProcessNamespace=true|false (BETA - default=true)<br/>ProcMountType=true|false (ALPHA - default=false)<br/>QOSReserved=true|false (ALPHA - default=false)<br/>ResourceLimitsPriorityFunction=true|false (ALPHA - default=false)<br/>ResourceQuotaScopeSelectors=true|false (BETA - default=true)<br/>RotateKubeletClientCertificate=true|false (BETA - default=true)<br/>RotateKubeletServerCertificate=true|false (BETA - default=true)<br/>RunAsGroup=true|false (ALPHA - default=false)<br/>RuntimeClass=true|false (ALPHA - default=false)<br/>SCTPSupport=true|false (ALPHA - default=false)<br/>ScheduleDaemonSetPods=true|false (BETA - default=true)<br/>ServiceNodeExclusion=true|false (ALPHA - default=false)<br/>StreamingProxyRedirects=true|false (BETA - default=true)<br/>SupportPodPidsLimit=true|false (ALPHA - default=false)<br/>Sysctls=true|false (BETA - default=true)<br/>TTLAfterFinished=true|false (ALPHA - default=false)<br/>TaintBasedEvictions=true|false (BETA - default=true)<br/>TaintNodesByCondition=true|false (BETA - default=true)<br/>TokenRequest=true|false (BETA - default=true)<br/>TokenRequestProjection=true|false (BETA - default=true)<br/>ValidateProxyRedirects=true|false (ALPHA - default=false)<br/>VolumeSnapshotDataSource=true|false (ALPHA - default=false)<br/>VolumeSubpathEnvExpansion=true|false (ALPHA - default=false)</td>
+      <td></td><td style="line-height: 130%; word-wrap: break-word;">A set of key=value pairs that describe feature gates for alpha/experimental features. Options are:<br/>APIListChunking=true|false (BETA - default=true)<br/>APIPriorityAndFairness=true|false (ALPHA - default=false)<br/>APIResponseCompression=true|false (BETA - default=true)<br/>AllAlpha=true|false (ALPHA - default=false)<br/>AllBeta=true|false (BETA - default=false)<br/>AllowInsecureBackendProxy=true|false (BETA - default=true)<br/>AppArmor=true|false (BETA - default=true)<br/>BalanceAttachedNodeVolumes=true|false (ALPHA - default=false)<br/>BlockVolume=true|false (BETA - default=true)<br/>BoundServiceAccountTokenVolume=true|false (ALPHA - default=false)<br/>CPUManager=true|false (BETA - default=true)<br/>CRIContainerLogRotation=true|false (BETA - default=true)<br/>CSIBlockVolume=true|false (BETA - default=true)<br/>CSIDriverRegistry=true|false (BETA - default=true)<br/>CSIInlineVolume=true|false (BETA - default=true)<br/>CSIMigration=true|false (BETA - default=true)<br/>CSIMigrationAWS=true|false (BETA - default=false)<br/>CSIMigrationAWSComplete=true|false (ALPHA - default=false)<br/>CSIMigrationAzureDisk=true|false (ALPHA - default=false)<br/>CSIMigrationAzureDiskComplete=true|false (ALPHA - default=false)<br/>CSIMigrationAzureFile=true|false (ALPHA - default=false)<br/>CSIMigrationAzureFileComplete=true|false (ALPHA - default=false)<br/>CSIMigrationGCE=true|false (BETA - default=false)<br/>CSIMigrationGCEComplete=true|false (ALPHA - default=false)<br/>CSIMigrationOpenStack=true|false (ALPHA - default=false)<br/>CSIMigrationOpenStackComplete=true|false (ALPHA - default=false)<br/>CustomCPUCFSQuotaPeriod=true|false (ALPHA - default=false)<br/>DevicePlugins=true|false (BETA - default=true)<br/>DryRun=true|false (BETA - default=true)<br/>DynamicAuditing=true|false (ALPHA - default=false)<br/>DynamicKubeletConfig=true|false (BETA - default=true)<br/>EndpointSlice=true|false (BETA - default=false)<br/>EphemeralContainers=true|false (ALPHA - default=false)<br/>EvenPodsSpread=true|false (ALPHA - default=false)<br/>ExpandCSIVolumes=true|false (BETA - default=true)<br/>ExpandInUsePersistentVolumes=true|false (BETA - default=true)<br/>ExpandPersistentVolumes=true|false (BETA - default=true)<br/>ExperimentalHostUserNamespaceDefaulting=true|false (BETA - default=false)<br/>HPAScaleToZero=true|false (ALPHA - default=false)<br/>HyperVContainer=true|false (ALPHA - default=false)<br/>IPv6DualStack=true|false (ALPHA - default=false)<br/>KubeletPodResources=true|false (BETA - default=true)<br/>LegacyNodeRoleBehavior=true|false (ALPHA - default=true)<br/>LocalStorageCapacityIsolation=true|false (BETA - default=true)<br/>LocalStorageCapacityIsolationFSQuotaMonitoring=true|false (ALPHA - default=false)<br/>NodeDisruptionExclusion=true|false (ALPHA - default=false)<br/>NonPreemptingPriority=true|false (ALPHA - default=false)<br/>PodDisruptionBudget=true|false (BETA - default=true)<br/>PodOverhead=true|false (ALPHA - default=false)<br/>ProcMountType=true|false (ALPHA - default=false)<br/>QOSReserved=true|false (ALPHA - default=false)<br/>RemainingItemCount=true|false (BETA - default=true)<br/>RemoveSelfLink=true|false (ALPHA - default=false)<br/>ResourceLimitsPriorityFunction=true|false (ALPHA - default=false)<br/>RotateKubeletClientCertificate=true|false (BETA - default=true)<br/>RotateKubeletServerCertificate=true|false (BETA - default=true)<br/>RunAsGroup=true|false (BETA - default=true)<br/>RuntimeClass=true|false (BETA - default=true)<br/>SCTPSupport=true|false (ALPHA - default=false)<br/>ServerSideApply=true|false (BETA - default=true)<br/>ServiceNodeExclusion=true|false (ALPHA - default=false)<br/>ServiceTopology=true|false (ALPHA - default=false)<br/>StartupProbe=true|false (ALPHA - default=false)<br/>StorageVersionHash=true|false (BETA - default=true)<br/>StreamingProxyRedirects=true|false (BETA - default=true)<br/>SupportNodePidsLimit=true|false (BETA - default=true)<br/>SupportPodPidsLimit=true|false (BETA - default=true)<br/>Sysctls=true|false (BETA - default=true)<br/>TTLAfterFinished=true|false (ALPHA - default=false)<br/>TaintBasedEvictions=true|false (BETA - default=true)<br/>TokenRequest=true|false (BETA - default=true)<br/>TokenRequestProjection=true|false (BETA - default=true)<br/>TopologyManager=true|false (ALPHA - default=false)<br/>ValidateProxyRedirects=true|false (BETA - default=true)<br/>VolumePVCDataSource=true|false (BETA - default=true)<br/>VolumeSnapshotDataSource=true|false (BETA - default=true)<br/>WinDSR=true|false (ALPHA - default=false)<br/>WinOverlay=true|false (ALPHA - default=false)<br/>WindowsGMSA=true|false (BETA - default=true)<br/>WindowsRunAsUserName=true|false (BETA - default=true)</td>
     </tr>
 
     <tr>
@@ -459,10 +487,24 @@ kube-controller-manager [flags]
     </tr>
 
     <tr>
-      <td colspan="2">--leader-elect-resource-lock endpoints&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default: "endpoints"</td>
+      <td colspan="2">--leader-elect-resource-lock endpoints&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default: "endpointsleases"</td>
     </tr>
     <tr>
       <td></td><td style="line-height: 130%; word-wrap: break-word;">The type of resource object that is used for locking during leader election. Supported options are endpoints (default) and `configmaps`.</td>
+    </tr>
+
+    <tr>
+      <td colspan="2">--leader-elect-resource-name string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default: "kube-controller-manager"</td>
+    </tr>
+    <tr>
+      <td></td><td style="line-height: 130%; word-wrap: break-word;">The name of resource object that is used for locking during leader election.</td>
+    </tr>
+
+    <tr>
+      <td colspan="2">--leader-elect-resource-namespace string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default: "kube-system"</td>
+    </tr>
+    <tr>
+      <td></td><td style="line-height: 130%; word-wrap: break-word;">The namespace of resource object that is used for locking during leader election.</td>
     </tr>
 
     <tr>
@@ -494,6 +536,13 @@ kube-controller-manager [flags]
     </tr>
 
     <tr>
+      <td colspan="2">--log-file-max-size uint&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default: 1800</td>
+    </tr>
+    <tr>
+      <td></td><td style="line-height: 130%; word-wrap: break-word;">Defines the maximum size a log file can grow to. Unit is megabytes. If the value is 0, the maximum file size is unlimited.</td>
+    </tr>
+
+    <tr>
       <td colspan="2">--log-flush-frequency duration&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default: 5s</td>
     </tr>
     <tr>
@@ -515,6 +564,13 @@ kube-controller-manager [flags]
     </tr>
 
     <tr>
+      <td colspan="2">--max-endpoints-per-slice int32&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default: 100</td>
+    </tr>
+    <tr>
+      <td></td><td style="line-height: 130%; word-wrap: break-word;">The maximum number of endpoints that will be added to an EndpointSlice. More endpoints per slice will result in less endpoint slices, but larger resources. Defaults to 100.</td>
+    </tr>
+
+    <tr>
       <td colspan="2">--min-resync-period duration&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default: 12h0m0s</td>
     </tr>
     <tr>
@@ -529,10 +585,24 @@ kube-controller-manager [flags]
     </tr>
 
     <tr>
-      <td colspan="2">--node-cidr-mask-size int32&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default: 24</td>
+      <td colspan="2">--node-cidr-mask-size int32</td>
     </tr>
     <tr>
-      <td></td><td style="line-height: 130%; word-wrap: break-word;">Mask size for node cidr in cluster.</td>
+      <td></td><td style="line-height: 130%; word-wrap: break-word;">Mask size for node cidr in cluster. Default is 24 for IPv4 and 64 for IPv6.</td>
+    </tr>
+
+    <tr>
+      <td colspan="2">--node-cidr-mask-size-ipv4 int32</td>
+    </tr>
+    <tr>
+      <td></td><td style="line-height: 130%; word-wrap: break-word;">Mask size for IPv4 node cidr in dual-stack cluster. Default is 24.</td>
+    </tr>
+
+    <tr>
+      <td colspan="2">--node-cidr-mask-size-ipv6 int32</td>
+    </tr>
+    <tr>
+      <td></td><td style="line-height: 130%; word-wrap: break-word;">Mask size for IPv6 node cidr in dual-stack cluster. Default is 64.</td>
     </tr>
 
     <tr>
@@ -718,6 +788,13 @@ kube-controller-manager [flags]
     </tr>
 
     <tr>
+      <td colspan="2">--skip-log-headers</td>
+    </tr>
+    <tr>
+      <td></td><td style="line-height: 130%; word-wrap: break-word;">If true, avoid headers when opening log files</td>
+    </tr>
+
+    <tr>
       <td colspan="2">--stderrthreshold severity&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default: 2</td>
     </tr>
     <tr>
@@ -749,7 +826,7 @@ kube-controller-manager [flags]
       <td colspan="2">--tls-min-version string</td>
     </tr>
     <tr>
-      <td></td><td style="line-height: 130%; word-wrap: break-word;">Minimum TLS version supported. Possible values: VersionTLS10, VersionTLS11, VersionTLS12</td>
+      <td></td><td style="line-height: 130%; word-wrap: break-word;">Minimum TLS version supported. Possible values: VersionTLS10, VersionTLS11, VersionTLS12, VersionTLS13</td>
     </tr>
 
     <tr>
@@ -805,4 +882,6 @@ kube-controller-manager [flags]
 </table>
 
 
+
+{{% /capture %}}
 

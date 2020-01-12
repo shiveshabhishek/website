@@ -10,6 +10,8 @@ weight: 80
 
 {{% capture overview %}}
 
+{{< feature-state for_k8s_version="v1.8" state="beta" >}}
+
 A _Cron Job_ creates [Jobs](/docs/concepts/workloads/controllers/jobs-run-to-completion/) on a time-based schedule.
 
 One CronJob object is like one line of a _crontab_ (cron table) file. It runs a job periodically
@@ -18,6 +20,11 @@ on a given schedule, written in [Cron](https://en.wikipedia.org/wiki/Cron) forma
 {{< note >}}
 All **CronJob** `schedule:` times are based on the timezone of the master where the job is initiated.
 {{< /note >}}
+
+When creating the manifest for a CronJob resource, make sure the name you provide
+is no longer than 52 characters. This is because the CronJob controller will automatically
+append 11 characters to the job name provided and there is a constraint that the
+maximum length of a Job name is no more than 63 characters.
 
 For instructions on creating and working with cron jobs, and for an example of a spec file for a cron job, see [Running automated tasks with cron jobs](/docs/tasks/job/automated-tasks-with-cron-jobs).
 
@@ -36,7 +43,7 @@ If `startingDeadlineSeconds` is set to a large value or left unset (the default)
 and if `concurrencyPolicy` is set to `Allow`, the jobs will always run
 at least once.
 
-For every CronJob, the CronJob controller checks how many schedules it missed in the duration from its last scheduled time until now. If there are more than 100 missed schedules, then it does not start the job and logs the error
+For every CronJob, the CronJob {{< glossary_tooltip term_id="controller" >}} checks how many schedules it missed in the duration from its last scheduled time until now. If there are more than 100 missed schedules, then it does not start the job and logs the error
 
 ````
 Cannot determine if job needs to be started. Too many missed start time (> 100). Set or decrease .spec.startingDeadlineSeconds or check clock skew.
@@ -54,7 +61,7 @@ To illustrate this concept further, suppose a CronJob is set to schedule a new J
 `startingDeadlineSeconds` is set to 200 seconds. If the CronJob controller happens to
 be down for the same period as the previous example (`08:29:00` to `10:21:00`,) the Job will still start at 10:22:00. This happens as the controller now checks how many missed schedules happened in the last 200 seconds (ie, 3 missed schedules), rather than from the last scheduled time until now.
 
-The Cronjob is only responsible for creating Jobs that match its schedule, and
+The CronJob is only responsible for creating Jobs that match its schedule, and
 the Job in turn is responsible for the management of the Pods it represents.
 
 {{% /capture %}}

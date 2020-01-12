@@ -17,7 +17,7 @@ weight: 50
 `Pod Preset`은 파드 생성 시간에 파드에 추가적인 런타임 요구사항을
 주입하기 위한 API 리소스이다.
 주어진 파드 프리셋이 적용되도록 파드에 명시하기 위해서는
-[레이블 셀렉터](/docs/concepts/overview/working-with-objects/labels/#label-selectors)를 사용한다.
+[레이블 셀렉터](/ko/docs/concepts/overview/working-with-objects/labels/#레이블-셀렉터)를 사용한다.
 
 파드 프리셋을 사용하는 것은 파드 템플릿 작성자에게 모든 파드를 위한 모든 정보를 명시적으로
 제공하지는 않아도 되도록 한다. 이렇게 하면, 어떤 특정 서비스를 사용할 파드의 파드
@@ -69,8 +69,7 @@ weight: 50
     minikube에서는 클러스터가 시작할 때
     `--extra-config=apiserver.runtime-config=settings.k8s.io/v1alpha1=true`
     플래그를 추가한다.
-1.  어드미션 컨트롤러 `PodPreset`을 활성화하였다.
-    이것을 이루는 방법 중 하나는
+1.  어드미션 컨트롤러 `PodPreset`을 활성화하였다. 이것을 이루는 방법 중 하나는
     API 서버를 위해서 명시된 `--enable-admission-plugins` 옵션에 `PodPreset`을 포함하는 것이다.
     minikube에서는 클러스터가 시작할 때
 

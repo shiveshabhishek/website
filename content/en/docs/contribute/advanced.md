@@ -23,7 +23,7 @@ SIG Docs [approvers](/docs/contribute/participating/#approvers) take regular tur
 
 The PR wrangler’s duties include:
 
-- Review [open pull requests](https://github.com/kubernetes/website/pulls) daily for quality and adherence to the [style guide](/docs/contribute/style/style-guide/).
+- Review [open pull requests](https://github.com/kubernetes/website/pulls) daily for quality and adherence to the [Style](/docs/contribute/style/style-guide/) and [Content](/docs/contribute/style/content-guide/) guides.
     - Review the smallest PRs (`size/XS`) first, then iterate towards the largest (`size/XXL`).
     - Review as many PRs as you can.
 - Ensure that the CLA is signed by each contributor.
@@ -55,6 +55,7 @@ reviewed is usually small. These queries specifically exclude localization PRs, 
   or copy-editing, either suggest changes or add a copyedit commit to the PR to move it along.
 - [Has LGTM, needs docs approval](https://github.com/kubernetes/website/pulls?q=is%3Aopen+is%3Apr+-label%3Ado-not-merge+label%3Alanguage%2Fen+label%3Algtm):
   Determine whether any additional changes or updates need to be made for the PR to be merged. If you think the PR is ready to be merged, comment `/approve`.
+- [Quick Wins](https://github.com/kubernetes/website/pulls?utf8=%E2%9C%93&q=is%3Apr+is%3Aopen+base%3Amaster+-label%3A%22do-not-merge%2Fwork-in-progress%22+-label%3A%22do-not-merge%2Fhold%22+label%3A%22cncf-cla%3A+yes%22+label%3A%22size%2FXS%22+label%3A%22language%2Fen%22+): If it’s a small PR against master with no clear blockers. (change "XS" in the size label as you work through the PRs [XS, S, M, L, XL, XXL]).
 - [Not against master](https://github.com/kubernetes/website/pulls?utf8=%E2%9C%93&q=is%3Aopen+is%3Apr+-label%3Ado-not-merge+label%3Alanguage%2Fen+-base%3Amaster): If it's against a `dev-` branch, it's for an upcoming release. Make sure the [release meister](https://github.com/kubernetes/sig-release/tree/master/release-team) knows about it by adding a comment with `/assign @<meister's_github-username>`. If it's against an old branch, help the PR author figure out whether it's targeted against the best branch.
 
 ### When to close Pull Requests
@@ -78,11 +79,11 @@ An automated service, [`fejta-bot`](https://github.com/fejta-bot) automatically 
 
 ## Propose improvements
 
-SIG Docs
-[members](/docs/contribute/participating/#members) can propose improvements.
+SIG Docs [members](/docs/contribute/participating/#members) can propose improvements.
 
 After you've been contributing to the Kubernetes documentation for a while, you
-may have ideas for improvement to the style guide, the toolchain used to build
+may have ideas for improvement to the [Style Guide](/docs/contribute/style/style-guide/) 
+, the [Content Guide](/docs/contribute/style/content-guide/), the toolchain used to build
 the documentation, the website style, the processes for reviewing and merging
 pull requests, or other aspects of the documentation. For maximum transparency,
 these types of proposals need to be discussed in a SIG Docs meeting or on the
@@ -177,7 +178,7 @@ SIG Docs [approvers](/docs/contribute/participating/#approvers) can serve a term
 Approvers must meet the following requirements to be a co-chair:
 
 - Have been a SIG Docs approver for at least 6 months
-- Have [led a Kubernetes docs release][coordinate-docs-for-a-kubernetes-release] or shadowed two releases
+- Have [led a Kubernetes docs release](/docs/contribute/advanced/#coordinate-docs-for-a-kubernetes-release) or shadowed two releases
 - Understand SIG Docs workflows and tooling: git, Hugo, localization, blog subproject
 - Understand how other Kubernetes SIGs and repositories affect the SIG Docs workflow, including: [teams in k/org](https://github.com/kubernetes/org/blob/master/config/kubernetes/sig-docs/teams.yaml), [process in k/community](https://github.com/kubernetes/community/tree/master/sig-docs), plugins in [k/test-infra](https://github.com/kubernetes/test-infra/), and the role of [SIG Architecture](https://github.com/kubernetes/community/tree/master/sig-architecture). 
 - Commit at least 5 hours per week (and often more) to the role for a minimum of 6 months

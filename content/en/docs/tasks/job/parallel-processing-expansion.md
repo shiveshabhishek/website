@@ -1,6 +1,7 @@
 ---
 title: Parallel Processing using Expansions
 content_template: templates/concept
+min-kubernetes-server-version: v1.8
 weight: 20
 ---
 
@@ -150,7 +151,7 @@ First, copy and paste the following template of a Job object, into a file called
 
 
 ```liquid
-{%- set params = [{ "name": "apple", "url": "http://www.orangepippin.com/apples", },
+{%- set params = [{ "name": "apple", "url": "https://www.orangepippin.com/varieties/apples", },
                   { "name": "banana", "url": "https://en.wikipedia.org/wiki/Banana", },
                   { "name": "raspberry", "url": "https://www.raspberrypi.org/" }]
 %}
