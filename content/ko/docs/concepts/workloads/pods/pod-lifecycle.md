@@ -65,7 +65,7 @@ PodCondition 배열의 각 요소는 다음 여섯 가지 필드를 가질 수 �
   * `PodScheduled`: 파드가 하나의 노드로 스케줄 완료되었음.
   * `Ready`: 파드는 요청들을 수행할 수 있으며
     모든 매칭 서비스들의 로드밸런싱 풀에 추가되어야 함.
-  * `Initialized`: 모든 [초기화 컨테이너](/docs/concepts/workloads/pods/init-containers)가
+  * `Initialized`: 모든 [초기화 컨테이너](/ko/docs/concepts/workloads/pods/init-containers)가
     성공적으로 시작 완료되었음.
   * `Unschedulable`: 스케줄러가 자원의 부족이나 다른 제약 등에 의해서
     지금 당장은 파드를 스케줄할 수 없음.
@@ -101,21 +101,29 @@ kubelet은 컨테이너에 의해서 구현된
 * Failure: 컨테이너가 진단에 실패함.
 * Unknown: 진단 자체가 실패하였으므로 아무런 액션도 수행되면 안됨.
 
-kubelet은 실행 중인 컨테이너들에 대해서 선택적으로 두 가지 종류의 프로브를 수행하고
+kubelet은 실행 중인 컨테이너들에 대해서 선택적으로 세 가지 종류의 프로브를 수행하고
 그에 반응할 수 있다.
 
-* `livenessProbe`는 컨테이너가 동작 중인지 여부를 나타낸다. 만약
+* `livenessProbe`: 컨테이너가 동작 중인지 여부를 나타낸다. 만약
    활성 프로브(liveness probe)에 실패한다면, kubelet은 컨테이너를 죽이고, 해당 컨테이너는
    [재시작 정책](#재시작-정책)의 대상이 된다. 만약 컨테이너가
    활성 프로브를 제공하지 않는 경우, 기본 상태는 `Success`이다.
 
-* `readinessProbe`는 컨테이너가 요청을 처리할 준비가 되었는지 여부를 나타낸다.
+* `readinessProbe`: 컨테이너가 요청을 처리할 준비가 되었는지 여부를 나타낸다.
    만약 준비성 프로브(readiness probe)가 실패한다면, 엔드포인트 컨트롤러는
    파드에 연관된 모든 서비스들의 엔드포인트에서 파드의 IP주소를 제거한다. 준비성 프로브의
    초기 지연 이전의 기본 상태는 `Failure`이다. 만약 컨테이너가 준비성 프로브를
    지원하지 않는다면, 기본 상태는 `Success`이다.
 
-### 언제 활성 또는 준비성 프로브를 사용해야 하는가?
+* `startupProbe`: 컨테이너 내의 애플리케이션이 시작되었는지를 나타낸다.
+   스타트업 프로브(startup probe)가 주어진 경우, 성공할 때 까지 다른 나머지 프로브는 
+   활성화 되지 않는다. 만약 스타트업 프로브가 실패하면, kubelet이 컨테이너를 죽이고,
+   컨테이너는 [재시작 정책](#재시작-정책)에 따라 처리된다. 컨테이너에 스타트업 
+   프로브가 없는 경우, 기본 상태는 `Success`이다.
+
+### 언제 활성 프로브를 사용해야 하는가?
+
+{{< feature-state for_k8s_version="v1.0" state="stable" >}}
 
 만약 컨테이너 속 프로세스가 어떠한 이슈에 직면하거나 건강하지 못한
 상태(unhealthy)가 되는 등 프로세스 자체의 문제로 중단될 수 있더라도, 활성 프로브가
@@ -124,6 +132,10 @@ kubelet은 실행 중인 컨테이너들에 대해서 선택적으로 두 가지
 
 프로브가 실패한 후 컨테이너가 종료되거나 재시작되길 원한다면, 활성 프로브를
 지정하고, `restartPolicy`를 항상(Always) 또는 실패 시(OnFailure)로 지정한다.
+
+### 언제 준비성 프로브를 사용해야 하는가?
+
+{{< feature-state for_k8s_version="v1.0" state="stable" >}}
 
 프로브가 성공한 경우에만 파드에 트래픽 전송을 시작하려고 한다면, 준비성 프로브를 지정하길 바란다.
 이 경우에서는, 준비성 프로브가 활성 프로브와 유사해 보일 수도 있지만,
@@ -142,8 +154,15 @@ kubelet은 실행 중인 컨테이너들에 대해서 선택적으로 두 가지
 파드는 파드 내의 모든 컨테이너들이 중지될 때까지 준비되지 않은 상태로
 남아있는다.
 
-활성 프로브 및 준비성 프로브를 설정하는 방법에 대한 추가적인 정보는,
-[활성 프로브 및 준비성 프로브 설정하기](/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/)를 참조하면 된다.
+### 언제 스타트업 프로브를 사용해야 하는가?
+
+{{< feature-state for_k8s_version="v1.16" state="alpha" >}}
+
+컨테이너가 보통 `initialDelaySeconds + failureThreshold × periodSeconds` 이후에 기동된다면, 스타트업 프로브가 활성화 프로브와 같은 엔드포인트를 체크하도록 명시해야 한다. `periodSeconds`의 기본 값은 30s 이다.
+이 때 컨테이너가 활성화 프로브의 기본 값 변경 없이 기동되도록 하려면 `failureThreshold`를 충분히 높게 설정해주어야 한다. 그래야 데드락(deadlocks)을 방지하는데 도움이 된다.
+
+활성, 준비성 및 스타트업 프로브를 설정하는 방법에 대한 추가적인 정보는,
+[활성, 준비성 및 스타트업 프로브 설정하기](/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/)를 참조하면 된다.
 
 ## 파드 및 컨테이너 상태
 
@@ -224,7 +243,7 @@ status:
 ```
 
 파드의 새로운 조건들은
-쿠버네티스의 [레이블 키 포멧](/docs/concepts/overview/working-with-objects/labels/#syntax-and-character-set)을 준수해야 한다.
+쿠버네티스의 [레이블 키 포멧](/ko/docs/concepts/overview/working-with-objects/labels/#구문과-캐릭터-셋)을 준수해야 한다.
 `kubectl patch` 명령어가 오브젝트 상태 패치(patching)를 아직 제공하지 않기 때문에,
 새로운 파드 조건들은 [KubeClient 라이브러리](/docs/reference/using-api/client-libraries/)를 통한 `PATCH` 액션을 통해서 주입되어야 한다.
 
@@ -252,16 +271,17 @@ PodSpec은 항상(Always), 실패 시(OnFailure), 절대 안 함(Never) 값으�
 kubelet에 의해서 재시작되는 종료된 컨테이너는
 5분으로 제한된 지수 백-오프 지연(10초, 20초, 40초 ...)을 기준으로 재시작되며,
 10분의 성공적 실행 후에 재설정된다.
-[파드 문서](/docs/user-guide/pods/#durability-of-pods-or-lack-thereof)에서 의논된 바와 같이,
+[파드 문서](/ko/docs/concepts/workloads/pods/pod/#파드의-내구성-또는-결핍)에서 의논된 바와 같이,
 파드는 일단 한 노드에 바운드되고 나면, 다른 노드에 다시 바운드되지 않는다.
 
 
 ## 파드의 일생(lifetime)
 
-일반적으로, 파드는 누군가 파드를 파괴할 때까지 사라지지 않는다.
-그것은 주로 사람이나 컨트롤러에 의해서 일어난다.
-이 법칙에 대한 유일한 예외는 일정 기간(마스터의 `terminated-pod-gc-threshold`에 의해 결정되는)
-이상 파드의 `phase`가 Succeeded 또는 Failed라서 파드가 만료되고 자동적으로 파괴되는 경우이다.
+일반적으로, 파드는 사람 혹은 컨트롤러의 프로세스가 명시적으로 파드를 삭제할 때까지 남아 있다.
+컨트롤 플레인은 파드의 수가 설정된 임계치(kube-controller-manager에서
+`terminated-pod-gc-threshold`에 의해 결정)를 초과할 때,
+종료된 파드들(`Succeeded` 또는 `Failed` 단계)을 정리한다.
+이로써 시간이 지남에 따라 파드들이 생성 및 종료되며 발생하는 리소스 누수를 피할 수 있다.
 
 세 가지 유형의 컨트롤러를 사용할 수 있다.
 
@@ -270,13 +290,13 @@ kubelet에 의해서 재시작되는 종료된 컨테이너는
   지정된 경우에 적합하다.
 
 - 웹 서버와 같이, 종료가 예상되지 않는 파드에 대해서는
-  [레플리케이션 컨트롤러](/docs/concepts/workloads/controllers/replicationcontroller/),
-  [레플리카 셋](/docs/concepts/workloads/controllers/replicaset/), 또는
-  [디플로이먼트](/docs/concepts/workloads/controllers/deployment/)를 사용하길 바란다.
+  [레플리케이션 컨트롤러](/ko/docs/concepts/workloads/controllers/replicationcontroller/),
+  [레플리카 셋](/ko/docs/concepts/workloads/controllers/replicaset/), 또는
+  [디플로이먼트](/ko/docs/concepts/workloads/controllers/deployment/)를 사용하길 바란다.
   레플리케이션 컨트롤러는 `restartPolicy`가 항상(Always)으로 지정된
   경우에만 적합하다.
 
-- 머신 당 하나씩 실행해야하는 파드를 위해서는 [데몬 셋](/docs/concepts/workloads/controllers/daemonset/)을 사용하길
+- 머신 당 하나씩 실행해야하는 파드를 위해서는 [데몬 셋](/ko/docs/concepts/workloads/controllers/daemonset/)을 사용하길
   바란다. 왜냐하면 데몬 셋은 특정 머신 전용 시스템 서비스(machine-specific system service)를 제공하기 때문이다.
 
 세 가지 모든 컨트롤러 유형은 PodTemplate을 가지고 있다. 파드를
@@ -379,9 +399,9 @@ spec:
   [컨테이너 라이프사이클 이벤트에 핸들러 부착하기](/docs/tasks/configure-pod-container/attach-handler-lifecycle-event/).
 
 * Hands-on 경험하기
-  [활성 및 준비성 프로브 설정하기](/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/).
+  [활성, 준비성 및 스타트업 프로브 설정하기](/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/).
 
-* [컨테이너 라이프사이클 후크(hook)](/docs/concepts/containers/container-lifecycle-hooks/)에 대해 더 배우기.
+* [컨테이너 라이프사이클 후크(hook)](/ko/docs/concepts/containers/container-lifecycle-hooks/)에 대해 더 배우기.
 
 {{% /capture %}}
 
