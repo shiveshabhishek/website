@@ -3,6 +3,9 @@ title: " Kubernetes Namespaces: use cases and insights "
 date: 2016-08-16
 slug: kubernetes-namespaces-use-cases-insights
 url: /blog/2016/08/Kubernetes-Namespaces-Use-Cases-Insights
+author: >
+  Mike Altarace (Google Cloud Platform),
+  Daz Wilkin (Google Cloud Platform)
 ---
 
 _“Who's on first, What's on second, I Don't Know's on third”&nbsp;_
@@ -125,7 +128,7 @@ You may wish to, but you cannot create a hierarchy of namespaces. Namespaces can
 
 
 
-Namespaces are easy to create and use but it’s also easy to deploy code inadvertently into the wrong namespace. Good DevOps hygiene suggests documenting and automating processes where possible and this will help. The other way to avoid using the wrong namespace is to set a [kubectl context](/docs/user-guide/kubectl/kubectl_config_set-context/).&nbsp;
+Namespaces are easy to create and use but it’s also easy to deploy code inadvertently into the wrong namespace. Good DevOps hygiene suggests documenting and automating processes where possible and this will help. The other way to avoid using the wrong namespace is to set a [kubectl context](/docs/reference/generated/kubectl/kubectl-commands#-em-set-context-em-).&nbsp;
 
 
 
@@ -133,7 +136,6 @@ As mentioned previously, Kubernetes does not (currently) provide a mechanism to 
 
 
 
-_--Mike Altarace & Daz Wilkin, Strategic Customer Engineers, Google Cloud Platform_
 
 
 

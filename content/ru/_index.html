@@ -1,36 +1,38 @@
 ---
-title: "Первоклассная оркестрация контейнеров"
-abstract: "Автоматизированное развёртывание, масштабирование и управление контейнерами."
+title: "Оркестрация контейнеров промышленного уровня"
+abstract: "Автоматизированное развёртывание, масштабирование и управление контейнерами"
 cid: home
+sitemap:
+  priority: 1.0
 ---
-
-{{< deprecationwarning >}}
 
 {{< blocks/section id="oceanNodes" >}}
 {{% blocks/feature image="flower" %}}
-### [Kubernetes (K8s)]({{< relref "/docs/concepts/overview/what-is-kubernetes" >}}) - это открытое программное обеспечение для автоматизации развёртывания, масштабирования и управления контейнеризированными приложениями.
+### [Kubernetes (K8s)]({{< relref "/docs/concepts/overview/what-is-kubernetes" >}}) — это открытое программное обеспечение для автоматизации развёртывания, масштабирования и управления контейнеризированными приложениями.
 
-Kubernetes группирует контейнеры, составляющие приложение, в логические единицы для более простого управления и обнаружения. При создании Kubernetes использован [15-тилетний опыт эксплуатации production нагрузок Google](http://queue.acm.org/detail.cfm?id=2898444), совмещённый с лучшими идеями и практиками сообщества.
+Kubernetes группирует контейнеры, составляющие приложение, в логические единицы для более простого управления и обнаружения. При создании Kubernetes использован [15-летний опыт эксплуатации производственных нагрузок Google](http://queue.acm.org/detail.cfm?id=2898444), который был совмещён с лучшими идеями и практиками сообщества.
 {{% /blocks/feature %}}
 
 {{% blocks/feature image="scalable" %}}
-#### Глобальный масштаб
+#### Масштабируемость любого уровня
 
-Разработанный на тех же принципах, которые позволяют Google запускать миллиарды контейнеров в неделю, Kubernetes может масштабироваться без увеличения вашей команды поддержки.
+Разработанный на тех же принципах, которые позволяют Google запускать миллиарды контейнеров в неделю, Kubernetes может масштабироваться без увеличения вашей технической команды.
 
 {{% /blocks/feature %}}
 
 {{% blocks/feature image="blocks" %}}
-#### Никогда не перерасти
+#### Бесконечная гибкость
 
-Независимо от того, проводите ли вы локальное тестирование или работаете в корпорации, гибкость Kubernetes растёт вместе с вами, обеспечивая бесперебойную и простую доставку приложений независимо от сложности ваших потребностей.
+Будь то локальное тестирование или работа в корпорации, гибкость Kubernetes растёт вместе с вами, обеспечивая бесперебойную и простую доставку приложений независимо от сложности ваших потребностей.
 
 {{% /blocks/feature %}}
 
 {{% blocks/feature image="suitcase" %}}
-#### Запускайте где угодно
+#### Может быть запущен где угодно
 
-Kubernetes - ПО с открытым исходным кодом, дающее вам возможность использовать преимущества гибкой (on-premises), гибридной или публичной облачной инфраструктуры, позволяющее без усилий перемещать рабочие нагрузки в соответствии с вашими потребностями.
+Kubernetes — это проект с открытым исходным кодом, который даёт вам полную свободу воспользоваться преимуществами локальной, гибридной или публичной облачной инфраструктуры, позволяя без усилий перераспределять рабочую нагрузку по мере необходимости.
+
+Для загрузки Kubernetes перейдите в раздел [Download](/releases/download/).
 
 {{% /blocks/feature %}}
 
@@ -38,18 +40,22 @@ Kubernetes - ПО с открытым исходным кодом, дающее 
 
 {{< blocks/section id="video" background-image="kub_video_banner_homepage" >}}
 <div class="light-text">
-<h2>О сложности миграции 150+ микросервисов в Kubernetes.</h2>
-        <p>Сара Уелльс, технический директор Operations and Reliability, Financial Times</p>
+<h2>О сложности миграции 150+ микросервисов в Kubernetes</h2>
+        <p>Сара Уэллс, технический директор по эксплуатации и надёжности в Financial Times</p>
         <button id="desktopShowVideoButton" onclick="kub.showVideo()">Смотреть видео</button>
         <br>
         <br>
-        <br>
-        <a href="https://events.linuxfoundation.org/events/kubecon-cloudnativecon-europe-2019" button id="desktopKCButton">Посетите KubeCon в Барселоне, 20-23 мая 2019</a>
-        <br>
+        <a href="https://events.linuxfoundation.org/kubecon-cloudnativecon-open-source-summit-ai-dev-china/" button id="desktopKCButton">Посетите KubeCon + CloudNativeCon в Китае 21-23 августа</a>
         <br>
         <br>
         <br>
-        <a href="https://www.lfasiallc.com/events/kubecon-cloudnativecon-china-2019" button id="desktopKCButton">Посетите KubeCon в Шанхае, 24-26 июня 2019</a>
+        <br>
+        <a href="https://events.linuxfoundation.org/kubecon-cloudnativecon-north-america-2024/" button id="desktopKCButton">Посетите KubeCon + CloudNativeCon в США 12-15 ноября</a>
+        <br>
+        <br>
+        <br>
+        <br>
+        <a href="https://events.linuxfoundation.org/kubecon-cloudnativecon-india/" button id="desktopKCButton">Посетите KubeCon + CloudNativeCon в Индии 11-12 декабря</a>
 </div>
 <div id="videoPlayer">
     <iframe data-url="https://www.youtube.com/embed/H06qrNmGqyE?autoplay=1" frameborder="0" allowfullscreen></iframe>

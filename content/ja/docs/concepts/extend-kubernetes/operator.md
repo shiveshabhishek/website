@@ -1,17 +1,17 @@
 ---
 title: オペレーターパターン
-content_template: templates/concept
+content_type: concept
 weight: 30
 ---
 
-{{% capture overview %}}
+<!-- overview -->
 
-オペレーターはサードパーティのアプリケーション、コンポーネントを管理するためのリソースを活用する、Kubernetesへのソフトウェア拡張です。
-オペレーターは、特に[制御ループ](/docs/concepts/#kubernetes-control-plane)のようなKubernetesが持つ仕組みに準拠しています。
+オペレーターは[カスタムリソース](/ja/docs/concepts/extend-kubernetes/api-extension/custom-resources/)を使用するKubernetesへのソフトウェア拡張です。
+オペレーターは、特に[制御ループ](/ja/docs/concepts/#kubernetes-control-plane)のようなKubernetesが持つ仕組みに準拠しています。
 
-{{% /capture %}}
 
-{{% capture body %}}
+
+<!-- body -->
 
 ## モチベーション
 
@@ -24,10 +24,11 @@ Kubernetes上でワークロードを稼働させている人は、しばしば�
 ## Kubernetesにおけるオペレーター
 
 Kubernetesは自動化のために設計されています。追加の作業、設定無しに、Kubernetesのコア機能によって多数のビルトインされた自動化機能が提供されます。
-ワークロードのデプロイ及び稼働を自動化するためにKubernetesを使うことができます。 *更に* Kubernetesがそれをどのように行うかの自動化も可能です。
+ワークロードのデプロイおよび稼働を自動化するためにKubernetesを使うことができます。 *さらに* Kubernetesがそれをどのように行うかの自動化も可能です。
 
-Kubernetesの{{< glossary_tooltip text="コントローラー" term_id="controller" >}}コンセプトは、Kubernetesのソースコードを修正すること無く、クラスターの振る舞いを拡張することを可能にします。
-オペレーターはKubernetes APIのクライアントで、[Custom Resource](/docs/concepts/api-extension/custom-resources/)にとっての、コントローラーのように振る舞います。
+
+Kubernetesの{{< glossary_tooltip text="オペレーターパターン" term_id="operator-pattern" >}}コンセプトは、Kubernetesのソースコードを修正すること無く、一つ以上のカスタムリソースに{{< glossary_tooltip text="カスタムコントローラー" term_id="controller" >}}をリンクすることで、クラスターの振る舞いを拡張することを可能にします。
+オペレーターはKubernetes APIのクライアントで、[Custom Resource](/ja/docs/concepts/extend-kubernetes/api-extension/custom-resources/)にとっての、コントローラーのように振る舞います。
 
 ## オペレーターの例 {#example}
 
@@ -75,23 +76,29 @@ kubectl edit SampleDB/example-database # 手動でいくつかの設定を変更
 ## 自分でオペレーターを書く {#writing-operator}
 
 必要な振る舞いを実装したオペレーターがエコシステム内に無い場合、自分で作成することができます。
-[次の項目](#what-s-next)で、自分でクラウドネイティブオペレーターを作るときに利用できるライブラリやツールのリンクを見つけることができます。
+[次の項目](#whats-next)で、自分でクラウドネイティブオペレーターを作るときに利用できるライブラリやツールのリンクを見つけることができます。
 
 オペレーター（すなわち、コントローラー）はどの言語/ランタイムでも実装でき、[Kubernetes APIのクライアント](/docs/reference/using-api/client-libraries/)として機能させることができます。
 
-{{% /capture %}}
 
-{{% capture whatsnext %}}
 
-* [Custom Resources](/docs/concepts/extend-kubernetes/api-extension/custom-resources/)をより深く学びます
+## {{% heading "whatsnext" %}}
+
+
+* [Custom Resources](/ja/docs/concepts/extend-kubernetes/api-extension/custom-resources/)をより深く学びます
 * ユースケースに合わせた、既製のオペレーターを[OperatorHub.io](https://operatorhub.io/)から見つけます
 * 自前のオペレーターを書くために既存のツールを使います、例:
-  * [KUDO](https://kudo.dev/)（Kubernetes Universal Declarative Operator）を使います
+  * [Charmed Operator Framework](https://juju.is/)
+  * [Java Operator SDK](https://github.com/java-operator-sdk/java-operator-sdk)
+  * [Kopf](https://github.com/nolar/kopf) (Kubernetes Operator Pythonic Framework)
+  * [kube-rs](https://kube.rs/) (Rust)
   * [kubebuilder](https://book.kubebuilder.io/)を使います
-  * [Metacontroller](https://metacontroller.app/)を自分で実装したWebHooksと一緒に使います
-  * [Operator Framework](https://github.com/operator-framework/getting-started)を使います
+  * [KubeOps](https://buehler.github.io/dotnet-operator-sdk/) (dotnet operator SDK)
+  * [Mast](https://docs.ansi.services/mast/user_guide/operator/)
+  * [Metacontroller](https://metacontroller.github.io/metacontroller/intro.html)を自分で実装したWebHooksと一緒に使います
+  * [Operator Framework](https://operatorframework.io)を使います
+  * [shell-operator](https://github.com/flant/shell-operator)
 * 自前のオペレーターを他のユーザーのために[公開](https://operatorhub.io/)します
 * オペレーターパターンを紹介している[CoreOSオリジナル記事](https://coreos.com/blog/introducing-operators.html)を読みます
 * Google Cloudが出したオペレーター作成のベストプラクティス[記事](https://cloud.google.com/blog/products/containers-kubernetes/best-practices-for-building-kubernetes-operators-and-stateful-apps)を読みます
 
-{{% /capture %}}

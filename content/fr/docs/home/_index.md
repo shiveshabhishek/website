@@ -6,8 +6,8 @@ description: Documentation francophone de Kubernetes
 noedit: true
 cid: docsHome
 layout: docsportal_home
-class: gridPage
-linkTitle: "Accueil"
+class: gridPage gridPageHome
+linkTitle: "Documentation"
 main_menu: true
 weight: 10
 hide_feedback: true

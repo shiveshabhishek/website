@@ -3,6 +3,8 @@ title: " Why Kubernetes doesn’t use libnetwork "
 date: 2016-01-14
 slug: why-kubernetes-doesnt-use-libnetwork
 url: /blog/2016/01/Why-Kubernetes-Doesnt-Use-Libnetwork
+author: >
+   Tim Hockin (Google)
 ---
 Kubernetes has had a very basic form of network plugins since before version 1.0 was released — around the same time as Docker's [libnetwork](https://github.com/docker/libnetwork) and Container Network Model ([CNM](https://github.com/docker/libnetwork/blob/master/docs/design.md)) was introduced. Unlike libnetwork, the Kubernetes plugin system still retains its "alpha" designation. Now that Docker's network plugin support is released and supported, an obvious question we get is why Kubernetes has not adopted it yet. After all, vendors will almost certainly be writing plugins for Docker — we would all be better off using the same drivers, right?  
 
@@ -26,7 +28,7 @@ On the other hand, CNI is more philosophically aligned with Kubernetes. It's far
 
 Additionally, it's trivial to wrap a CNI plugin and produce a more customized CNI plugin — it can be done with a simple shell script. CNM is much more complex in this regard. This makes CNI an attractive option for rapid development and iteration. Early prototypes have proven that it's possible to eject almost 100% of the currently hard-coded network logic in kubelet into a plugin.  
 
-We investigated [writing a "bridge" CNM driver](https://groups.google.com/forum/#!topic/kubernetes-sig-network/5MWRPxsURUw) for Docker that ran CNI drivers. This turned out to be very complicated. First, the CNM and CNI models are very different, so none of the "methods" lined up. We still have the global vs. local and key-value issues discussed above. Assuming this driver would declare itself local, we have to get info about logical networks from Kubernetes.  
+We investigated [writing a "bridge" CNM driver](https://groups.google.com/g/kubernetes-sig-network/c/5MWRPxsURUw) for Docker that ran CNI drivers. This turned out to be very complicated. First, the CNM and CNI models are very different, so none of the "methods" lined up. We still have the global vs. local and key-value issues discussed above. Assuming this driver would declare itself local, we have to get info about logical networks from Kubernetes.  
 
 Unfortunately, Docker drivers are hard to map to other control planes like Kubernetes. Specifically, drivers are not told the name of the network to which a container is being attached — just an ID that Docker allocates internally. This makes it hard for a driver to map back to any concept of network that exists in another system.  
 
@@ -34,6 +36,4 @@ This and other issues have been brought up to Docker developers by network vendo
 
 For all of these reasons we have chosen to invest in CNI as the Kubernetes plugin model. There will be some unfortunate side-effects of this. Most of them are relatively minor (for example, `docker inspect` will not show an IP address), but some are significant. In particular, containers started by `docker run` might not be able to communicate with containers started by Kubernetes, and network integrators will have to provide CNI drivers if they want to fully integrate with Kubernetes. On the other hand, Kubernetes will get simpler and more flexible, and a lot of the ugliness of early bootstrapping (such as configuring Docker to use our bridge) will go away.  
 
-As we proceed down this path, we’ll certainly keep our eyes and ears open for better ways to integrate and simplify. If you have thoughts on how we can do that, we really would like to hear them — find us on [slack](http://slack.k8s.io/) or on our [network SIG mailing-list](https://groups.google.com/forum/#!forum/kubernetes-sig-network).  
-
-Tim Hockin, Software Engineer, Google
+As we proceed down this path, we’ll certainly keep our eyes and ears open for better ways to integrate and simplify. If you have thoughts on how we can do that, we really would like to hear them — find us on [slack](http://slack.k8s.io/) or on our [network SIG mailing-list](https://groups.google.com/g/kubernetes-sig-network).

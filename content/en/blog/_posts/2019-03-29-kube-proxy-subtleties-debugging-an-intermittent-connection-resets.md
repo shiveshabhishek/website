@@ -1,9 +1,9 @@
 ---
 title: 'kube-proxy Subtleties: Debugging an Intermittent Connection Reset'
 date: 2019-03-29
+author: >
+  [Yongkun Gui](mailto:ygui@google.com) (Google)
 ---
-
-**Author:** [Yongkun Gui](mailto:ygui@google.com), Google
 
 I recently came across a bug that causes intermittent connection resets.  After
 some digging, I found it was caused by a subtle combination of several different
@@ -144,10 +144,9 @@ ways to address it.
 - Specifically add an iptables rule to drop the packets that are marked as
   *INVALID*, so it won’t reach to client pod and cause harm.
 
-The fix is drafted (https://github.com/kubernetes/kubernetes/pull/74840), but
-unfortunately it didn’t catch the v1.14 release window. However, for the users
-that are affected by this bug, there is a way to mitigate the problem by applying
-the following rule in your cluster.
+The [fix](https://github.com/kubernetes/kubernetes/pull/74840) is available in v1.15+.
+However, for the users that are affected by this bug, there is a way to mitigate the
+problem by applying the following rule in your cluster.
 
 ```yaml
 apiVersion: extensions/v1beta1

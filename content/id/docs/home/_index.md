@@ -3,8 +3,8 @@ title: Dokumentasi Kubernetes
 noedit: true
 cid: docsHome
 layout: docsportal_home
-class: gridPage
-linkTitle: "Home"
+class: gridPage gridPageHome
+linkTitle: "Dokumentasi"
 main_menu: true
 weight: 10
 hide_feedback: true
@@ -50,6 +50,8 @@ cards:
 - name: download
   title: Unduh Kubernetes
   description: Untuk instalasi atau pembaharuan Kubernetes ke versi terbaru, lihat catatan rilis saat ini.
+  button: Unduh Kubernetes Sekarang
+  button_path: /releases/download/
 - name: about
   title: Tentang dokumentasi
   description: Situs ini merupakan dokumentasi dari Kubernetes versi saat ini dan 4 versi sebelumnya.

@@ -3,8 +3,9 @@ title: " Kubespray Ansible Playbooks foster Collaborative Kubernetes Ops "
 date: 2017-05-19
 slug: kubespray-ansible-collaborative-kubernetes-ops
 url: /blog/2017/05/Kubespray-Ansible-Collaborative-Kubernetes-Ops
+author: >
+   Rob Hirschfeld (RackN)
 ---
-_Today’s guest post is by Rob Hirschfeld, co-founder of open infrastructure automation project, Digital Rebar and co-chair of the SIG Cluster Ops. &nbsp;_  
 
 **Why Kubespray?**  
 
@@ -107,17 +108,8 @@ With Kubespray and Digital Rebar as a repeatable base, extensions get much faste
 If this is interesting, please engage with us in the [Cluster Ops SIG](https://github.com/kubernetes/community/tree/master/sig-cluster-ops), [Kubespray](https://github.com/kubernetes-incubator/kubespray)&nbsp;or [Digital Rebar](http://rebar.digital/) communities.&nbsp;  
 
 
-_-- Rob Hirschfeld, co-founder of RackN and co-chair of the Cluster Ops SIG_
 
-
-
-
-
--
-Get involved with the Kubernetes project on [GitHub](https://github.com/kubernetes/kubernetes)
--
-Post questions (or answer questions) on [Stack Overflow](http://stackoverflow.com/questions/tagged/kubernetes)
--
-Connect with the community on [Slack](http://slack.k8s.io/)
--
-Follow us on Twitter [@Kubernetesio](https://twitter.com/kubernetesio) for latest updates
+- Get involved with the Kubernetes project on [GitHub](https://github.com/kubernetes/kubernetes)
+- Post questions (or answer questions) on [Stack Overflow](http://stackoverflow.com/questions/tagged/kubernetes)
+- Connect with the community on [Slack](http://slack.k8s.io/)
+- Follow us on Twitter [@Kubernetesio](https://twitter.com/kubernetesio) for latest updates

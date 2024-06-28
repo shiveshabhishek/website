@@ -3,8 +3,8 @@ title: Tài liệu Kubernetes
 noedit: true
 cid: docsHome
 layout: docsportal_home
-class: gridPage
-linkTitle: "Home"
+class: gridPage gridPageHome
+linkTitle: "Tài liệu"
 main_menu: true
 weight: 10
 hide_feedback: true

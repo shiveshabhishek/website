@@ -1,9 +1,11 @@
 ---
 title: Field Selectors
-weight: 60
+content_type: concept
+weight: 70
 ---
 
-_Field selectors_ let you [select Kubernetes resources](/docs/concepts/overview/working-with-objects/kubernetes-objects) based on the value of one or more resource fields. Here are some example field selector queries:
+_Field selectors_ let you select Kubernetes {{< glossary_tooltip text="objects" term_id="object" >}} based on the
+value of one or more resource fields. Here are some examples of field selector queries:
 
 * `metadata.name=my-service`
 * `metadata.namespace!=default`
@@ -16,12 +18,7 @@ kubectl get pods --field-selector status.phase=Running
 ```
 
 {{< note >}}
-Field selectors are essentially resource *filters*. By default, no selectors/filters are applied, meaning that all resources of the specified type are selected. This makes the following `kubectl` queries equivalent:
-
-```shell
-kubectl get pods
-kubectl get pods --field-selector ""
-```
+Field selectors are essentially resource *filters*. By default, no selectors/filters are applied, meaning that all resources of the specified type are selected. This makes the `kubectl` queries `kubectl get pods` and `kubectl get pods --field-selector ""` equivalent.
 {{< /note >}}
 
 ## Supported fields
@@ -35,6 +32,20 @@ kubectl get ingress --field-selector foo.bar=baz
 Error from server (BadRequest): Unable to find "ingresses" that match label selector "", field selector "foo.bar=baz": "foo.bar" is not a known field selector: only "metadata.name", "metadata.namespace"
 ```
 
+### List of supported fields
+
+| Kind                      | Fields                                                                                                                                                                                                                                                          |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Pod                       | `spec.nodeName`<br>`spec.restartPolicy`<br>`spec.schedulerName`<br>`spec.serviceAccountName`<br>`spec.hostNetwork`<br>`status.phase`<br>`status.podIP`<br>`status.nominatedNodeName`                                                                            |
+| Event                     | `involvedObject.kind`<br>`involvedObject.namespace`<br>`involvedObject.name`<br>`involvedObject.uid`<br>`involvedObject.apiVersion`<br>`involvedObject.resourceVersion`<br>`involvedObject.fieldPath`<br>`reason`<br>`reportingComponent`<br>`source`<br>`type` |
+| Secret                    | `type`                                                                                                                                                                                                                                                          |
+| Namespace                 | `status.phase`                                                                                                                                                                                                                                                  |
+| ReplicaSet                | `status.replicas`                                                                                                                                                                                                                                               |
+| ReplicationController     | `status.replicas`                                                                                                                                                                                                                                               |
+| Job                       | `status.successful`                                                                                                                                                                                                                                             |
+| Node                      | `spec.unschedulable`                                                                                                                                                                                                                                            |
+| CertificateSigningRequest | `spec.signerName`                                                                                                                                                                                                                                               |
+
 ## Supported operators
 
 You can use the `=`, `==`, and `!=` operators with field selectors (`=` and `==` mean the same thing). This `kubectl` command, for example, selects all Kubernetes Services that aren't in the `default` namespace:
@@ -42,6 +53,10 @@ You can use the `=`, `==`, and `!=` operators with field selectors (`=` and `==`
 ```shell
 kubectl get services  --all-namespaces --field-selector metadata.namespace!=default
 ```
+{{< note >}}
+[Set-based operators](/docs/concepts/overview/working-with-objects/labels/#set-based-requirement)
+(`in`, `notin`, `exists`) are not supported for field selectors. 
+{{< /note >}}
 
 ## Chained selectors
 
@@ -53,7 +68,7 @@ kubectl get pods --field-selector=status.phase!=Running,spec.restartPolicy=Alway
 
 ## Multiple resource types
 
-You use field selectors across multiple resource types. This `kubectl` command selects all Statefulsets and Services that are not in the `default` namespace:
+You can use field selectors across multiple resource types. This `kubectl` command selects all Statefulsets and Services that are not in the `default` namespace:
 
 ```shell
 kubectl get statefulsets,services --all-namespaces --field-selector metadata.namespace!=default

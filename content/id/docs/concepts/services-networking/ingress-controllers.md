@@ -1,10 +1,10 @@
 ---
 title: Kontroler Ingress
-content_template: templates/concept
+content_type: concept
 weight: 40
 ---
 
-{{% capture overview %}}
+<!-- overview -->
 
 Agar Ingress dapat bekerja sebagaimana mestinya,
 sebuah klaster harus memiliki paling tidak sebuah kontroler Ingress.
@@ -18,16 +18,16 @@ paling sesuai dengan kebutuhan kamu.
 Kubernetes sebagai sebuah proyek, saat ini, mendukung dan memaintain kontroler-kontroler [GCE](https://git.k8s.io/ingress-gce/README.md) dan
   [nginx](https://git.k8s.io/ingress-nginx/README.md).
 
-{{% /capture %}}
 
-{{% capture body %}}
+
+<!-- body -->
 
 ## Kontroler-kontroler lainnya
 
 * [Ambassador](https://www.getambassador.io/) *API Gateway* merupakan ingress berbasis [Envoy](https://www.envoyproxy.io)
   kontroler dengan dukungan [komunitas](https://www.getambassador.io/docs) atau
   [komersial](https://www.getambassador.io/pro/) dari [Datawire](https://www.datawire.io/).
-* [AppsCode Inc.](https://appscode.com) menawarkan dukungan dan pemeliharaan untuk ingress berbasis [HAProxy](http://www.haproxy.org/), [Voyager](https://appscode.com/products/voyager).
+* [AppsCode Inc.](https://appscode.com) menawarkan dukungan dan pemeliharaan untuk ingress berbasis [HAProxy](http://www.haproxy.org/), [Voyager](https://voyagermesh.com).
 * [Contour](https://projectcontour.io/) merupakan ingress berbasis [Envoy](https://www.envoyproxy.io/)
   yang disediakan dan didukung oleh VMware.
 * Citrix menyediakan sebuah [kontroler Ingress](https://github.com/citrix/citrix-k8s-ingress-controller) untuk perangkat keras (MPX), virtualisasi (VPX) dan [kontainerisasi cuma-cuma (CPX) ADC](https://www.citrix.com/products/citrix-adc/cpx-express.html) untuk mesin [*baremetal*](https://github.com/citrix/citrix-k8s-ingress-controller/tree/master/deployment/baremetal) dan penyedia layanan [*cloud*](https://github.com/citrix/citrix-k8s-ingress-controller/tree/master/deployment) deployments.
@@ -66,11 +66,12 @@ kontroler Ingress bisa saja memiliki sedikit perbedaan cara kerja.
 Pastikan kamu sudah terlebih dahulu memahami dokumentasi kontroler Ingress yang akan kamu pakai sebelum memutuskan untuk memakai kontroler tersebut.
 {{< /note >}}
 
-{{% /capture %}}
 
-{{% capture whatsnext %}}
 
-* Pelajari [Ingress](/docs/concepts/services-networking/ingress/) lebih lanjut.
+## {{% heading "whatsnext" %}}
+
+
+* Pelajari [Ingress](/id/docs/concepts/services-networking/ingress/) lebih lanjut.
 * [Melakukan konfigurasi Ingress pada Minikube dengan kontroler NGINX](/docs/tasks/access-application-cluster/ingress-minikube)
 
-{{% /capture %}}
+

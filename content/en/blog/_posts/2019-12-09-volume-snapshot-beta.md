@@ -3,9 +3,10 @@ layout: blog
 title: "Kubernetes 1.17 Feature: Kubernetes Volume Snapshot Moves to Beta"
 date: 2019-12-09T10:00:00-08:00
 slug: kubernetes-1-17-feature-cis-volume-snapshot-beta
+author: >
+  Xing Yang (VMware),
+  Xiangqian Yu (Google)
 ---
-
-**Authors:** Xing Yang, VMware & Xiangqian Yu, Google
 
 The Kubernetes Volume Snapshot feature is now beta in Kubernetes v1.17. It was introduced [as alpha](https://kubernetes.io/blog/2018/10/09/introducing-volume-snapshot-alpha-for-kubernetes/) in Kubernetes v1.12, with a [second alpha](https://kubernetes.io/blog/2019/01/17/update-on-volume-snapshot-alpha-for-kubernetes/) with breaking changes in Kubernetes v1.13.  This post summarizes the changes in the beta release.
 
@@ -44,7 +45,7 @@ As mentioned above, with the promotion of Volume Snapshot to beta, the feature i
 
 In order to use the Kubernetes Volume Snapshot feature, you must ensure the following components have been deployed on your Kubernetes cluster:
 
-- [Kubernetes Volume Snapshot CRDs](https://github.com/kubernetes-csi/external-snapshotter/tree/master/config/crd)
+- [Kubernetes Volume Snapshot CRDs](https://github.com/kubernetes-csi/external-snapshotter/tree/53469c21962339229dd150cbba50c34359acec73/config/crd)
 - [Volume snapshot controller](https://github.com/kubernetes-csi/external-snapshotter/tree/master/pkg/common-controller)
 - CSI Driver supporting Kubernetes volume snapshot beta
 
@@ -180,7 +181,7 @@ If your cluster does not come pre-installed with the correct components, you may
 #### Install Snapshot Beta CRDs
 
 - `kubectl create -f config/crd`
-- [https://github.com/kubernetes-csi/external-snapshotter/tree/master/config/crd](https://github.com/kubernetes-csi/external-snapshotter/tree/master/config/crd)
+- [https://github.com/kubernetes-csi/external-snapshotter/tree/53469c21962339229dd150cbba50c34359acec73/config/crd](https://github.com/kubernetes-csi/external-snapshotter/tree/53469c21962339229dd150cbba50c34359acec73/config/crd)
 - Do this once per cluster
 
 

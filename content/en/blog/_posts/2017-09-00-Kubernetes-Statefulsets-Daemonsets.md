@@ -4,9 +4,10 @@ title: " Kubernetes StatefulSets & DaemonSets Updates "
 date: 2017-09-27
 slug: kubernetes-statefulsets-daemonsets
 url: /blog/2017/09/Kubernetes-Statefulsets-Daemonsets
+author: >
+   Janet Kuo (Google),
+   Kenneth Owens (Kenneth Owens)
 ---
-Editor's note: today's post is by Janet Kuo and Kenneth Owens, Software Engineers at Google.
-
 
 This post talks about recent updates to the [DaemonSet](/docs/concepts/workloads/controllers/daemonset/) and [StatefulSet](/docs/concepts/workloads/controllers/statefulset/) API objects for Kubernetes. We explore these features using [Apache ZooKeeper](https://zookeeper.apache.org/) and [Apache Kafka](https://kafka.apache.org/) StatefulSets and a [Prometheus node exporter](https://github.com/prometheus/node_exporter) DaemonSet.
 
@@ -987,13 +988,8 @@ Rolling updates and roll backs close an important feature gap for DaemonSets and
 
 
 
--
-Post questions (or answer questions) on [Stack Overflow](http://stackoverflow.com/questions/tagged/kubernetes)
--
-Join the community portal for advocates on [K8sPort](http://k8sport.org/)
--
-Follow us on Twitter [@Kubernetesio](https://twitter.com/kubernetesio) for latest updates
--
-Connect with the community on [Slack](http://slack.k8s.io/)
--
-Get involved with the Kubernetes project on [GitHub](https://github.com/kubernetes/kubernetes)
+- Post questions (or answer questions) on [Stack Overflow](http://stackoverflow.com/questions/tagged/kubernetes)
+- Join the community portal for advocates on [K8sPort](http://k8sport.org/)
+- Follow us on Twitter [@Kubernetesio](https://twitter.com/kubernetesio) for latest updates
+- Connect with the community on [Slack](http://slack.k8s.io/)
+- Get involved with the Kubernetes project on [GitHub](https://github.com/kubernetes/kubernetes)

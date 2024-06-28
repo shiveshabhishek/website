@@ -1,73 +1,92 @@
 ---
 title: Hello Minikube
-content_template: templates/tutorial
+content_type: tutorial
 weight: 5
-menu:
-  main:
-    title: "Get Started"
-    weight: 10
-    post: >
-      <p>Ready to get your hands dirty? Build a simple Kubernetes cluster that runs "Hello World" for Node.js.</p>
-card: 
+card:
   name: tutorials
   weight: 10
 ---
 
-{{% capture overview %}}
+<!-- overview -->
 
-This tutorial shows you how to run a simple Hello World Node.js app
-on Kubernetes using [Minikube](/docs/setup/learning-environment/minikube) and Katacoda.
-Katacoda provides a free, in-browser Kubernetes environment. 
+This tutorial shows you how to run a sample app on Kubernetes using minikube.
+The tutorial provides a container image that uses NGINX to echo back all the requests.
 
-{{< note >}}
-You can also follow this tutorial if you've installed [Minikube locally](/docs/tasks/tools/install-minikube/).
-{{< /note >}}
+## {{% heading "objectives" %}}
 
-{{% /capture %}}
-
-{{% capture objectives %}}
-
-* Deploy a hello world application to Minikube.
+* Deploy a sample application to minikube.
 * Run the app.
 * View application logs.
 
-{{% /capture %}}
+## {{% heading "prerequisites" %}}
 
-{{% capture prerequisites %}}
 
-This tutorial provides a container image built from the following files:
+This tutorial assumes that you have already set up `minikube`.
+See __Step 1__ in [minikube start](https://minikube.sigs.k8s.io/docs/start/) for installation instructions.
+{{< note >}}
+Only execute the instructions in __Step 1, Installation__. The rest is covered on this page.  
+{{< /note >}}
 
-{{< codenew language="js" file="minikube/server.js" >}}
+You also need to install `kubectl`.
+See [Install tools](/docs/tasks/tools/#kubectl) for installation instructions.
 
-{{< codenew language="conf" file="minikube/Dockerfile" >}}
 
-For more information on the `docker build` command, read the [Docker documentation](https://docs.docker.com/engine/reference/commandline/build/).
+<!-- lessoncontent -->
 
-{{% /capture %}}
+## Create a minikube cluster
 
-{{% capture lessoncontent %}}
+```shell
+minikube start
+```
 
-## Create a Minikube cluster
+## Open the Dashboard
 
-1. Click **Launch Terminal** 
+Open the Kubernetes dashboard. You can do this two different ways:
 
-    {{< kat-button >}}
+{{< tabs name="dashboard" >}}
+{{% tab name="Launch a browser" %}}
+Open a **new** terminal, and run:
+```shell
+# Start a new terminal, and leave this running.
+minikube dashboard
+```
 
-    {{< note >}}If you installed Minikube locally, run `minikube start`.{{< /note >}}
+Now, switch back to the terminal where you ran `minikube start`.
 
-2. Open the Kubernetes dashboard in a browser:
+{{< note >}}
+The `dashboard` command enables the dashboard add-on and opens the proxy in the default web browser.
+You can create Kubernetes resources on the dashboard such as Deployment and Service.
 
-    ```shell
-    minikube dashboard
-    ```
+To find out how to avoid directly invoking the browser from the terminal and get a URL for the web dashboard, see the "URL copy and paste" tab.
 
-3. Katacoda environment only: At the top of the terminal pane, click the plus sign, and then click **Select port to view on Host 1**.
+By default, the dashboard is only accessible from within the internal Kubernetes virtual network.
+The `dashboard` command creates a temporary proxy to make the dashboard accessible from outside the Kubernetes virtual network.
 
-4. Katacoda environment only: Type `30000`, and then click **Display Port**. 
+To stop the proxy, run `Ctrl+C` to exit the process.
+After the command exits, the dashboard remains running in the Kubernetes cluster.
+You can run the `dashboard` command again to create another proxy to access the dashboard.
+{{< /note >}}
+
+{{% /tab %}}
+{{% tab name="URL copy and paste" %}}
+
+If you don't want minikube to open a web browser for you, run the `dashboard` subcommand with the
+`--url` flag. `minikube` outputs a URL that you can open in the browser you prefer.
+
+Open a **new** terminal, and run:
+```shell
+# Start a new terminal, and leave this running.
+minikube dashboard --url
+```
+
+Now, you can use this URL and switch back to the terminal where you ran `minikube start`.
+
+{{% /tab %}}
+{{< /tabs >}}
 
 ## Create a Deployment
 
-A Kubernetes [*Pod*](/docs/concepts/workloads/pods/pod/) is a group of one or more Containers,
+A Kubernetes [*Pod*](/docs/concepts/workloads/pods/) is a group of one or more Containers,
 tied together for the purposes of administration and networking. The Pod in this
 tutorial has only one Container. A Kubernetes
 [*Deployment*](/docs/concepts/workloads/controllers/deployment/) checks on the health of your
@@ -75,13 +94,14 @@ Pod and restarts the Pod's Container if it terminates. Deployments are the
 recommended way to manage the creation and scaling of Pods.
 
 1. Use the `kubectl create` command to create a Deployment that manages a Pod. The
-Pod runs a Container based on the provided Docker image. 
+   Pod runs a Container based on the provided Docker image.
 
     ```shell
-    kubectl create deployment hello-node --image=gcr.io/hello-minikube-zero-install/hello-node
+    # Run a test container image that includes a webserver
+    kubectl create deployment hello-node --image=registry.k8s.io/e2e-test-images/agnhost:2.39 -- /agnhost netexec --http-port=8080
     ```
 
-2. View the Deployment:
+1. View the Deployment:
 
     ```shell
     kubectl get deployments
@@ -94,7 +114,9 @@ Pod runs a Container based on the provided Docker image.
     hello-node   1/1     1            1           1m
     ```
 
-3. View the Pod:
+    (It may take some time for the pod to become available. If you see "0/1", try again in a few seconds.)
+
+1. View the Pod:
 
     ```shell
     kubectl get pods
@@ -107,19 +129,39 @@ Pod runs a Container based on the provided Docker image.
     hello-node-5f76cf6ccf-br9b5   1/1       Running   0          1m
     ```
 
-4. View cluster events:
+1. View cluster events:
 
     ```shell
     kubectl get events
     ```
 
-5. View the `kubectl` configuration:
+1. View the `kubectl` configuration:
 
     ```shell
     kubectl config view
     ```
-  
-    {{< note >}}For more information about `kubectl`commands, see the [kubectl overview](/docs/user-guide/kubectl-overview/).{{< /note >}}
+
+1. View application logs for a container in a pod (replace pod name with the one you got from `kubectl get pods`).
+   
+   {{< note >}}
+   Replace `hello-node-5f76cf6ccf-br9b5` in the `kubectl logs` command with the name of the pod from the `kubectl get pods` command output.
+   {{< /note >}}
+   
+   ```shell
+   kubectl logs hello-node-5f76cf6ccf-br9b5
+   ```
+
+   The output is similar to:
+
+   ```
+   I0911 09:19:26.677397       1 log.go:195] Started HTTP server on port 8080
+   I0911 09:19:26.677586       1 log.go:195] Started UDP server on port  8081
+   ```
+
+
+{{< note >}}
+For more information about `kubectl` commands, see the [kubectl overview](/docs/reference/kubectl/).
+{{< /note >}}
 
 ## Create a Service
 
@@ -133,11 +175,14 @@ Kubernetes [*Service*](/docs/concepts/services-networking/service/).
     ```shell
     kubectl expose deployment hello-node --type=LoadBalancer --port=8080
     ```
-    
+
     The `--type=LoadBalancer` flag indicates that you want to expose your Service
     outside of the cluster.
+    
+    The application code inside the test image only listens on TCP port 8080. If you used
+    `kubectl expose` to expose a different port, clients could not connect to that other port.
 
-2. View the Service you just created:
+2. View the Service you created:
 
     ```shell
     kubectl get services
@@ -152,7 +197,7 @@ Kubernetes [*Service*](/docs/concepts/services-networking/service/).
     ```
 
     On cloud providers that support load balancers,
-    an external IP address would be provisioned to access the Service. On Minikube,
+    an external IP address would be provisioned to access the Service. On minikube,
     the `LoadBalancer` type makes the Service accessible through the `minikube service`
     command.
 
@@ -162,15 +207,11 @@ Kubernetes [*Service*](/docs/concepts/services-networking/service/).
     minikube service hello-node
     ```
 
-4. Katacoda environment only: Click the plus sign, and then click **Select port to view on Host 1**.
-
-5. Katacoda environment only: Note the 5 digit port number displayed opposite to `8080` in services output. This port number is randomly generated and it can be different for you. Type your number in the port number text box, then click Display Port. Using the example from earlier, you would type `30369`.
-
-    This opens up a browser window that serves your app and shows the "Hello World" message.
+    This opens up a browser window that serves your app and shows the app's response.
 
 ## Enable addons
 
-Minikube has a set of built-in addons that can be enabled, disabled and opened in the local Kubernetes environment.
+The minikube tool includes a set of built-in {{< glossary_tooltip text="addons" term_id="addons" >}} that can be enabled, disabled and opened in the local Kubernetes environment.
 
 1. List the currently supported addons:
 
@@ -187,7 +228,6 @@ Minikube has a set of built-in addons that can be enabled, disabled and opened i
     efk: disabled
     freshpod: disabled
     gvisor: disabled
-    heapster: disabled
     helm-tiller: disabled
     ingress: disabled
     ingress-dns: disabled
@@ -200,20 +240,20 @@ Minikube has a set of built-in addons that can be enabled, disabled and opened i
     storage-provisioner: enabled
     storage-provisioner-gluster: disabled
     ```
-   
-2. Enable an addon, for example, `heapster`:
+
+1. Enable an addon, for example, `metrics-server`:
 
     ```shell
-    minikube addons enable heapster
+    minikube addons enable metrics-server
     ```
-  
+
     The output is similar to:
 
     ```
-    heapster was successfully enabled
+    The 'metrics-server' addon is enabled
     ```
 
-3. View the Pod and Service you just created:
+1. View the Pod and Service you created by installing that addon:
 
     ```shell
     kubectl get pod,svc -n kube-system
@@ -225,7 +265,7 @@ Minikube has a set of built-in addons that can be enabled, disabled and opened i
     NAME                                        READY     STATUS    RESTARTS   AGE
     pod/coredns-5644d7b6d9-mh9ll                1/1       Running   0          34m
     pod/coredns-5644d7b6d9-pqd2t                1/1       Running   0          34m
-    pod/heapster-9jttx                          1/1       Running   0          26s
+    pod/metrics-server-67fb648c5                1/1       Running   0          26s
     pod/etcd-minikube                           1/1       Running   0          34m
     pod/influxdb-grafana-b29w8                  2/2       Running   0          26s
     pod/kube-addon-manager-minikube             1/1       Running   0          34m
@@ -236,22 +276,41 @@ Minikube has a set of built-in addons that can be enabled, disabled and opened i
     pod/storage-provisioner                     1/1       Running   0          34m
 
     NAME                           TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)             AGE
-    service/heapster               ClusterIP   10.96.241.45    <none>        80/TCP              26s
+    service/metrics-server         ClusterIP   10.96.241.45    <none>        80/TCP              26s
     service/kube-dns               ClusterIP   10.96.0.10      <none>        53/UDP,53/TCP       34m
     service/monitoring-grafana     NodePort    10.99.24.54     <none>        80:30002/TCP        26s
     service/monitoring-influxdb    ClusterIP   10.111.169.94   <none>        8083/TCP,8086/TCP   26s
     ```
 
-4. Disable `heapster`:
+1. Check the output from `metrics-server`:
 
     ```shell
-    minikube addons disable heapster
+    kubectl top pods
     ```
-  
+
     The output is similar to:
 
     ```
-    heapster was successfully disabled
+    NAME                         CPU(cores)   MEMORY(bytes)   
+    hello-node-ccf4b9788-4jn97   1m           6Mi             
+    ```
+
+    If you see the following message, wait, and try again:
+
+    ```
+    error: Metrics API not available
+    ```
+
+1. Disable `metrics-server`:
+
+    ```shell
+    minikube addons disable metrics-server
+    ```
+
+    The output is similar to:
+
+    ```
+    metrics-server was successfully disabled
     ```
 
 ## Clean up
@@ -263,7 +322,7 @@ kubectl delete service hello-node
 kubectl delete deployment hello-node
 ```
 
-Optionally, stop the Minikube virtual machine (VM):
+Stop the Minikube cluster
 
 ```shell
 minikube stop
@@ -272,15 +331,21 @@ minikube stop
 Optionally, delete the Minikube VM:
 
 ```shell
+# Optional
 minikube delete
 ```
 
-{{% /capture %}}
+If you want to use minikube again to learn more about Kubernetes, you don't need to delete it.
 
-{{% capture whatsnext %}}
+## Conclusion
 
+This page covered the basic aspects to get a minikube cluster up and running. You are now ready to deploy applications.
+
+## {{% heading "whatsnext" %}}
+
+
+* Tutorial to _[deploy your first app on Kubernetes with kubectl](/docs/tutorials/kubernetes-basics/deploy-app/deploy-intro/)_.
 * Learn more about [Deployment objects](/docs/concepts/workloads/controllers/deployment/).
-* Learn more about [Deploying applications](/docs/user-guide/deploying-applications/).
+* Learn more about [Deploying applications](/docs/tasks/run-application/run-stateless-application-deployment/).
 * Learn more about [Service objects](/docs/concepts/services-networking/service/).
 
-{{% /capture %}}

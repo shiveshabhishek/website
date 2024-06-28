@@ -3,9 +3,9 @@ layout: blog
 title: "Kubernetes 1.16: Custom Resources, Overhauled Metrics, and Volume Extensions"
 date: 2019-09-18
 slug: kubernetes-1-16-release-announcement
+author: >
+  [Kubernetes 1.16 Release Team](https://github.com/kubernetes/sig-release/blob/master/releases/release-1.16/release_team.md)
 ---
-
-**Authors:** [Kubernetes 1.16 Release Team](https://github.com/kubernetes/sig-release/blob/master/releases/release-1.16/release_team.md)
 
 We’re pleased to announce the delivery of Kubernetes 1.16, our third release of 2019! Kubernetes 1.16 consists of 31 enhancements: 8 enhancements moving to stable, 8 enhancements in beta, and 15 enhancements in alpha.
 
@@ -71,7 +71,7 @@ Introducing CSI plugin support for out-of-tree providers, enabling Windows nodes
 
 ## Introducing Endpoint Slices
 
-The release of Kubernetes 1.16 includes an exciting new alpha feature: the EndpointSlice API. This API provides a scalable and extensible alternative to the [Endpoints](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.16/#endpoints-v1-core) resource, which dates back to the very first versions of Kubernetes. Behind the scenes, Endpoints play a big role in network routing within Kubernetes. Each Service endpoint is tracked within these resources - kube-proxy uses them for generating proxy rules that allow pods to communicate with each other so easily in Kubernetes, and many ingress controllers use them to route HTTP traffic directly to pods.
+The release of Kubernetes 1.16 includes an exciting new alpha feature: the EndpointSlice API. This API provides a scalable and extensible alternative to the [Endpoints](https://v1-16.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.16/#endpoints-v1-core) resource, which dates back to the very first versions of Kubernetes. Behind the scenes, Endpoints play a big role in network routing within Kubernetes. Each Service endpoint is tracked within these resources - kube-proxy uses them for generating proxy rules that allow pods to communicate with each other so easily in Kubernetes, and many ingress controllers use them to route HTTP traffic directly to pods.
 
 ### Providing Greater Scalability
 
